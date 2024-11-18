@@ -1,0 +1,188 @@
+Main Class
+
+package Nesne_Yonelimli_Programlama_Sonrasi;
+
+public class Main {
+    public static void main(String[] args) {
+        Teacher f1  = new Teacher("Enver Hoca","FZK", "111");
+        Teacher b1 = new Teacher("Bilal Hoca", "BIO", "222");
+        Teacher k1 = new Teacher("Elif Hoca","KIM","333");
+
+
+        Course fizik = new Course("Fizik", "101", "FZK");
+        fizik.addTeacher(f1);
+
+        Course kimya = new Course("Kimya", "101","KIM");
+        kimya.addTeacher(k1);
+
+        Course bio = new Course("Biyoloji", "101","BIO");
+        bio.addTeacher(b1);
+
+
+        Student s1 = new Student("Öğrenci Enver","5353","4",fizik,kimya,bio);
+        s1.addBulkExamNote(93,77,63,54,67,87);
+        s1.isPass();
+
+        Student s2 = new Student("Öğrenci Zülal","5353","4",fizik,kimya,bio);
+        s2.addBulkExamNote(98,97,95,92,75,82);
+        s2.isPass();
+
+    }
+}
+
+
+=================================================================================================
+
+Student Class
+
+package Nesne_Yonelimli_Programlama_Sonrasi;
+
+public class Student {
+
+    Course c1;
+    Course c2;
+    Course c3;
+    String name;
+    String stuNo;
+    String classes;
+    double avarage;
+    boolean isPass;
+
+    Student(String name, String stuNo, String classes, Course c1, Course c2, Course c3){
+        this.name = name;
+        this.stuNo = stuNo;
+        this.classes = classes;
+        this.c1 = c1;
+        this.c2 = c2;
+        this.c3 = c3;
+        this.avarage = 0.0;
+        this.isPass = false;
+
+    }
+
+    void addBulkExamNote(int note1, int note2, int note3,int note1s, int note2s, int note3s){
+        if (note1 >= 0 && note1 <= 100) {
+            this.c1.note = note1;
+        }
+        if (note2 >= 0 && note2 <= 100) {
+            this.c2.note = note2;
+        }
+        if (note3 >= 0 && note3 <= 100) {
+            this.c3.note = note3;
+        }
+        if (note1s >= 0 && note1s <= 100) {
+            this.c1.noteS = note1s;
+        }
+        if (note2s >= 0 && note2s <= 100) {
+            this.c2.noteS = note2s;
+        }
+        if (note3s >= 0 && note3s <= 100) {
+            this.c3.noteS = note3s;
+        }else {
+            System.out.println("Yanlış bir not girdiniz!");
+        }
+    }
+
+    void isPass(){
+        System.out.println("============================");
+        this.c1.totalnote = (this.c1.note*0.8)+(this.c1.noteS*0.2);
+        this.c1.totalnote = c1.totalnote;
+
+        this.c2.totalnote = (this.c2.note*0.8)+(this.c2.noteS*0.2);
+        this.c2.totalnote = c2.totalnote;
+
+        this.c3.totalnote = (this.c3.note*0.8)+(this.c3.noteS*0.2);
+        this.c3.totalnote = c3.totalnote;
+
+        this.avarage = (c1.totalnote+c2.totalnote+c3.totalnote) / 3.0;
+
+        if (this.avarage > 55){
+            System.out.println("Sınıfı geçtiniz.");
+            this.isPass = true;
+
+        }else {
+            System.out.println("Sınıfta kaldınız.");
+            this.isPass = false;
+        }
+        printNote();
+        System.out.println("Ortalamanız = " + this.avarage);
+
+
+    }
+
+    void printNote(){
+        System.out.println(this.c1.name + " Notu    \t:" + (this.c1.note+this.c1.noteS)/2);
+        System.out.println(this.c2.name + " Notu    \t:" + this.c2.totalnote);
+        System.out.println(this.c3.name + " Notu\t:" + this.c3.totalnote);
+        System.out.println("================");
+    }
+
+
+
+
+}
+
+=================================================================================================
+
+Teacher Class
+
+package Nesne_Yonelimli_Programlama_Sonrasi;
+
+public class Teacher {
+
+    String name;
+    String mpno;
+    String branch;
+
+    public Teacher(String name, String branch, String mpno){
+        this.name = name;
+        this.branch = branch;
+        this.mpno = mpno;
+    }
+
+    void print(){
+        System.out.println("Adı : " +this.name);
+        System.out.println("Bölümü : " +this.branch);
+        System.out.println("Telefonu : " +this.mpno);
+    }
+
+}
+
+=================================================================================================
+
+Course Class
+
+package Nesne_Yonelimli_Programlama_Sonrasi;
+
+public class Course {
+    Teacher courseTeacher;
+    String name;
+    String code;
+    String prefix;
+    int note;
+    int noteS;
+    double totalnote;
+
+    Course(String name, String code, String prefix){
+        this.name = name;
+        this.code = code;
+        this.prefix = prefix;
+        int note = 0;
+    }
+
+    void addTeacher(Teacher courseTeacher) {
+        if (courseTeacher.branch.equals(this.prefix)) {
+            this.courseTeacher = courseTeacher;
+
+        }else{
+            System.out.println("Öğretmen ve ders bölümleri uyuşmuyor ! ");
+        }
+    }
+
+    void printTeacherInfo(){
+        this.courseTeacher.print();
+    }
+
+
+}
+
